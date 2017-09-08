@@ -1,14 +1,14 @@
 # Ticketit
 
-A simple helpdesk tickets system for Laravel 5.1+ (5.1, 5.2, 5.3 and 5.4) which integrates smoothly with Laravel default users and auth system.
-It will integrate into your current Laravel project within minutes, and you can offer your customers and your team a nice and simple support ticket system.
+A simple helpdesk tickets system for Laravel 5.1+ (5.1, 5.2, 5.3, 5.4 and 5.5) which integrates smoothly with Laravel default users and auth system. 
+It will integrate into your current Laravel project within minutes, and you can offer your customers and your team a nice and simple support ticket system. 
 
 ## Features:
 1. Three main users roles users, agents, and admins
 2. Users can create tickets, keep track of their tickets status, giving comments, and close their own tickets (access permissions are configurable)
 3. Auto assigning agents to tickets, the system searches for agents in specific department and auto select the agent with lowest queue
-4. Simple admin panel
-5. Localization (Arabic, Brazilian Portuguese, Deutsch (German), English, Farsi, French, Hungarian, Persian, Russian, and Spanish language packs are included)
+4. Simple admin panel 
+5. Localization (Arabic, Brazilian Portuguese, Deutsch (German), English, Farsi, French, Hungarian, Italian, Persian, Russian, and Spanish language packs are included)
 6. Very simple installation and integration process
 7. Admin dashboard with statistics and performance tracking graphs
 8. Simple text editor for tickets descriptions and comments allows images upload
@@ -44,17 +44,15 @@ However if you'd like to include Ticketit in your existing project, skip to the 
 
 Step 1. Run this code via your terminal (1-2 minutes)
 ```shell
-	composer require kordy/ticketit:0.*
+composer require kordy/ticketit:0.*
 ```
 
 Step 2. After install, you have to add this line on your `config/app.php` in Service Providers section (1-2 minutes).
 ```php
-	Kordy\Ticketit\TicketitServiceProvider::class,
+Kordy\Ticketit\TicketitServiceProvider::class,
 ```
-Step 3. [Check if App\User exists](https://github.com/thekordy/ticketit/wiki/Make-sure-that-App%5CUser-exists) and add TicketitAgent trait to your user model
-```php
-	use \Kordy\Ticketit\Traits\TicketitAgent;
-```
+
+Step 3. [Check if App\User exists](https://github.com/thekordy/ticketit/wiki/Make-sure-that-App%5CUser-exists)
 
 Step 4. Make sure you have [authentication](https://laravel.com/docs/5.4/authentication#introduction) set up. In 5.2+, you can use `php artisan make:auth`
 
@@ -68,7 +66,11 @@ Default ticketit front route: http://your-project-url/tickets
 
 Default ticketit admin route: http://your-project-url/tickets-admin
 
-**Note:** Make sure you have created at least one status, one prority, and one category before you start creating tickets.
+**Notes:**
+
+Make sure you have created at least one status, one prority, and one category before you start creating tickets.
+
+If you move your installation folder to another path (or server), you need to update the row with slug='routes' in table `ticketit_settings`. After that, don't forget to flush the entire cache.
 
 ## Documentation
 [Ticketit Wiki](https://github.com/thekordy/ticketit/wiki)

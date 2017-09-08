@@ -12,8 +12,6 @@ use Kordy\Ticketit\Models\Agent;
 use Kordy\Ticketit\Models\Category;
 use Kordy\Ticketit\Models\Setting;
 use Kordy\Ticketit\Models\Ticket;
-use Yajra\Datatables\Datatables;
-use Yajra\Datatables\Engines\EloquentEngine;
 
 class TicketsController extends Controller
 {
@@ -30,8 +28,14 @@ class TicketsController extends Controller
         $this->agent = $agent;
     }
 
-    public function data(Datatables $datatables, $complete = false)
+    public function data($complete = false)
     {
+        if (LaravelVersion::min('5.4')) {
+            $datatables = app(\Yajra\DataTables\DataTables::class);
+        } else {
+            $datatables = app(\Yajra\Datatables\Datatables::class);
+        }
+
         $user = $this->agent->find(auth()->user()->id);
 
         if ($user->isAdmin()) {
@@ -89,7 +93,7 @@ class TicketsController extends Controller
         return $collection->make(true);
     }
 
-    public function renderTicketTable(EloquentEngine $collection)
+    public function renderTicketTable($collection)
     {
         $collection->editColumn('subject', function ($ticket) {
             return (string) link_to_route(
@@ -237,7 +241,7 @@ class TicketsController extends Controller
      */
     public function show($id)
     {
-        $ticket = $this->tickets->find($id);
+        $ticket = $this->tickets->findOrFail($id);
 
         list($priority_lists, $category_lists, $status_lists) = $this->PCS();
 

@@ -12,6 +12,7 @@ use Kordy\Ticketit\Console\Htmlify;
 use Kordy\Ticketit\Controllers\InstallController;
 use Kordy\Ticketit\Controllers\NotificationsController;
 use Kordy\Ticketit\Controllers\ToolsController;
+use Kordy\Ticketit\Helpers\LaravelVersion;
 use Kordy\Ticketit\Models\Agent;
 use Kordy\Ticketit\Models\Comment;
 use Kordy\Ticketit\Models\Setting;
@@ -242,7 +243,13 @@ class TicketitServiceProvider extends ServiceProvider
          * Register the service provider for the dependency.
          */
         $this->app->register(\Collective\Html\HtmlServiceProvider::class);
-        $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
+
+        if (LaravelVersion::min('5.4')) {
+            $this->app->register(\Yajra\DataTables\DataTablesServiceProvider::class);
+        } else {
+            $this->app->register(\Yajra\Datatables\DatatablesServiceProvider::class);
+        }
+
         $this->app->register(\Jenssegers\Date\DateServiceProvider::class);
         $this->app->register(\Mews\Purifier\PurifierServiceProvider::class);
         /*
